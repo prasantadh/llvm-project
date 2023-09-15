@@ -40,6 +40,9 @@
 // AddressSanitizer
 SANITIZER("address", Address)
 
+// Memory Verify Sanitizer
+SANITIZER("mverify", MVerify)
+
 // Requires AddressSanitizer
 SANITIZER("pointer-compare", PointerCompare)
 
