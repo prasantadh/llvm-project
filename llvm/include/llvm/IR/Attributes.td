@@ -255,6 +255,9 @@ def StructRet : TypeAttr<"sret", [ParamAttr]>;
 /// AddressSanitizer is on.
 def SanitizeAddress : EnumAttr<"sanitize_address", [FnAttr]>;
 
+/// MVerify is on.
+def MVerify : EnumAttr<"mverify", [FnAttr]>;
+
 /// ThreadSanitizer is on.
 def SanitizeThread : EnumAttr<"sanitize_thread", [FnAttr]>;
 
@@ -329,6 +332,7 @@ class CompatRule<string F> {
 }
 
 def : CompatRule<"isEqual<SanitizeAddressAttr>">;
+def : CompatRule<"isEqual<MVerifyAttr>">;
 def : CompatRule<"isEqual<SanitizeThreadAttr>">;
 def : CompatRule<"isEqual<SanitizeMemoryAttr>">;
 def : CompatRule<"isEqual<SanitizeHWAddressAttr>">;
