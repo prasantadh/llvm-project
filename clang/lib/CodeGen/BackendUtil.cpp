@@ -73,6 +73,7 @@
 #include "llvm/Transforms/Instrumentation/HWAddressSanitizer.h"
 #include "llvm/Transforms/Instrumentation/InstrProfiling.h"
 #include "llvm/Transforms/Instrumentation/KCFI.h"
+#include "llvm/Transforms/Instrumentation/MVerify.h"
 #include "llvm/Transforms/Instrumentation/MemProfiler.h"
 #include "llvm/Transforms/Instrumentation/MemorySanitizer.h"
 #include "llvm/Transforms/Instrumentation/SanitizerBinaryMetadata.h"
@@ -708,6 +709,10 @@ static void addSanitizers(const Triple &TargetTriple,
     if (LangOpts.Sanitize.has(SanitizerKind::Thread)) {
       MPM.addPass(ModuleThreadSanitizerPass());
       MPM.addPass(createModuleToFunctionPassAdaptor(ThreadSanitizerPass()));
+    }
+
+    if (LangOpts.Sanitize.has(SanitizerKind::MVerify)) {
+        MPM.addPass(createModuleToFunctionPassAdaptor(MVerifyPass()));
     }
 
     auto ASanPass = [&](SanitizerMask Mask, bool CompileKernel) {
