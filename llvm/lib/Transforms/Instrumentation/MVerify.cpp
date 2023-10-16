@@ -50,14 +50,11 @@ bool MVerifyPass::getInterestingMemoryOperands(Instruction *I) {
 
 PreservedAnalyses MVerifyPass::run(Function &F, FunctionAnalysisManager &FAM) {
 
-    if (F.getName() != "main") {
-        errs() << F.getName() << "\n";
+    // if __attribute__((no_sanitize("mverify"))), skip
+    // this also handles ignorelist, because of how attributes are added
+    if (!F.hasFnAttribute(Attribute::MVerify)) {
         return PreservedAnalyses::all();
     }
-    // TODO
-    // if __attribute__((no_sanitize("mverify"))), skip
-    // if in ignorelist, skip
-    // apply this to at least mverify function so we don't recurse forever
 
     LLVMContext &Context = F.getContext();
 
